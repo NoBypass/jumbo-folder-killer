@@ -15,22 +15,26 @@ print_all_items () {
     done
 }
 
+ process_user_input() {
+  if [[ $1 == "q" ]]; then
+    is_running=0
+  elif [[ $1 == "cd" ]]; then
+    cd $current_directory
+    is_running=0
+  fi
+}
+
 # Uncomment the following line to display the contents of welcomemessage.txt
 cat welcomemessage.txt
 
+current_directory=$HOME
+is_running=1
 # Main loop
-while true; do
-    # TODO: Add your logic here
-    
-    # Example usage of the functions:
-    current_directory="/home/schreifuchs"
+while [ $is_running -eq 1 ]; do
     items=$(ls "$current_directory")
     print_all_items $items
+
+    read -p ">>> " input 
+    process_user_input $input
+done  
     
-done
-
-
-
-
-
-
