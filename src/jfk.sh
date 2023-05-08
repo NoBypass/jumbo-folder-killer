@@ -8,11 +8,18 @@ echo -e "\n \n"
 
 
 # Takes a list of item names in directory
-print_all_items () {
-    # TODO: Implement this function
-    for item in "$@"; do
-        echo "$item"
-    done
+print_all_items() {
+  count=1
+  for item in "$@"; do
+    size=$(du -h "$current_directory/$item" | cut -f 1)
+    output="${count}) ${item}"
+    padding=$((50 - ${#item}))
+    printf "%s%.0s %s\n" "$output" "$(seq 1 "$padding")" "$size"
+    ((count++))
+    if [ "$count" -gt $# ]; then
+      break
+    fi
+  done
 }
 
  process_user_input() {
@@ -34,7 +41,6 @@ while [ $is_running -eq 1 ]; do
     items=$(ls "$current_directory")
     print_all_items $items
 
-    read -p ">>> " input 
+    read -p ">>> " input
     process_user_input $input
-done  
-    
+done
