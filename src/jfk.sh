@@ -11,10 +11,10 @@ echo -e "\n \n"
 print_all_items() {
   count=1
   for item in "$@"; do
-    size=$(du -hs "$current_directory/$item" | cut -f 1)
+    size=$(du -sh "$current_directory/$item" | cut -f 1)
     output="${count}) ${item}"
-    padding=$((50 - ${#item}))
-    printf "%s %s\n" "$output"  "$size"
+    padding=$((50 - ${#output}))
+    printf "%s %.${padding}s %s\n" "$output" ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " "$size"
     ((count++))
     if [ "$count" -gt $# ]; then
       break
