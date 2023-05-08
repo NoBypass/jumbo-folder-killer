@@ -15,12 +15,11 @@ print_all_items () {
     done
 }
 
- process_user_input() {
+process_user_input() {
   if [[ $1 == "q" ]]; then
     is_running=0
-  elif [[ $1 == "cd" ]]; then
-    cd $current_directory
-    is_running=0
+  if [[ $string =~ ^[0-9]+$ ]]; then
+    echo ${items[(($string))]}
   fi
 }
 
