@@ -11,10 +11,10 @@ echo -e "\n \n"
 print_all_items() {
   count=1
   for item in "$@"; do
-    size=$(du -h "$current_directory/$item" | cut -f 1)
+    size=$(du -hs "$current_directory/$item" | cut -f 1)
     output="${count}) ${item}"
     padding=$((50 - ${#item}))
-    printf "%s%.0s %s\n" "$output" "$(seq 1 "$padding")" "$size"
+    printf "%s %s\n" "$output"  "$size"
     ((count++))
     if [ "$count" -gt $# ]; then
       break
@@ -22,15 +22,17 @@ print_all_items() {
   done
 }
 
+
 process_user_input() {
   if [[ $1 == "q" ]]; then
     is_running=0
-  if [[ $string =~ ^[0-9]+$ ]]; then
-    echo ${items[(($string))]}
+  elif [[ $input =~ ^[0-9]+$ ]]; then
+    local file_nr=$(($input))
+    echo $file_nr
+    echo ${items[$file_nr]}
   fi
 }
 
-# Uncomment the following line to display the contents of welcomemessage.txt
 cat welcomemessage.txt
 
 current_directory=$HOME
