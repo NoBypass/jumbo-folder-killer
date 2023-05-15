@@ -9,12 +9,14 @@ echo -e "\n \n"
 
 # Takes a list of item names in directory
 print_all_items() {
-  count=1
+  local count=1
+  folders=()
   for item in "$@"; do
     size=$(du -sh "$current_directory/$item" | cut -f 1)
     output="${count}) ${item}"
     padding=$((50 - ${#output}))
     printf "%s %.${padding}s %s\n" "$output" ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " "$size"
+    folders+=("$item")
     ((count++))
     if [ "$count" -gt $# ]; then
       break
@@ -27,9 +29,17 @@ process_user_input() {
   if [[ $1 == "q" ]]; then
     is_running=0
   elif [[ $input =~ ^[0-9]+$ ]]; then
-    local file_nr=$(($input))
-    echo $file_nr
-    echo ${items[$file_nr]}
+    local file_nr=$(($input-1))
+    
+    if [[ $file_nr -lt ${#folders[@]} && $file_nr -ge 0 ]]
+    then
+      local dir=${folders[file_nr]} 
+      current_directory+="/$dir"
+    else
+      echo "Invalid input!!"
+    fi
+  else
+    echo "Invalid input!!"
   fi
 }
 
