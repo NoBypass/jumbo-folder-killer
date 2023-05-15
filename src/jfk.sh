@@ -31,13 +31,17 @@ process_user_input() {
   elif [[ $input =~ ^[0-9]+$ ]]; then
     local file_nr=$(($input-1))
     
-    if [[ $file_nr -lt ${#folders[@]} && $file_nr -ge 0 ]]
-    then
+    if [[ $file_nr -lt ${#folders[@]} && $file_nr -ge 0 ]]; then
       local dir=${folders[file_nr]} 
       current_directory+="/$dir"
     else
       echo "Invalid input!!"
     fi
+  elif [[ $input == ".." ]]; then
+    current_directory="${current_directory%/*}"
+  elif [[ $input == "dd" ]]; then
+    rm -r $current_directory
+    current_directory="${current_directory%/*}"
   else
     echo "Invalid input!!"
   fi
@@ -52,6 +56,6 @@ while [ $is_running -eq 1 ]; do
     items=$(ls "$current_directory")
     print_all_items $items
 
-    read -p ">>> " input
+    read -p "$current_directory >>>" input
     process_user_input $input
 done
