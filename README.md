@@ -64,7 +64,7 @@ Das Skript soll folgende programmtechnische Anforderungen erfüllen:
  - Benutzerfreundlichkeit: Der Code soll gut strukturiert, gut kommentiert und leicht verständlich sein, um die Wartbarkeit und Erweiterbarkeit des Skripts zu gewährleisten.
 
 # 2Ablaufdiagramm
-![alt text](ablauf.svg)
+![alt text](docs/ablauf.svg)
 
 ## 4.3Kompatibilität
 
